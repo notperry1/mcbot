@@ -3,6 +3,16 @@ if (process.argv.length < 4 || process.argv.length > 6) {
     console.log('Usage : node bot.js <host> <port> [<name>] [<password>]')
     process.exit(1)
 }
+
+/* Haha trash talk go brrrr */
+const strings = Array(
+    "Fuck this server you should join toastmc.dev https://discord.gg/waSAT7Y",
+    "Welcome, now leave and play on toastmc.dev https://discord.gg/waSAT7Y",
+    "Toastmc.dev on Top https://discord.gg/waSAT7Y",
+    "Have you seen this? Have heard about this? https://toastmc.dev/server.html",
+    "Did you know that this server is on top? https://discord.gg/waSAT7Y"
+);
+
 function create(){
     console.log("Bot is booting...")
     const bot = mineflayer.createBot({
@@ -11,8 +21,6 @@ function create(){
         username: process.argv[4] ? process.argv[4] : 'ToastmcB0T',
         password: process.argv[5]
     })
-    const msgDelay = 5
-    const logDelay = 5
 
     bot.on('login', () => {
         console.log("[Bot] I have logged in successfully!")
@@ -36,8 +44,9 @@ function create(){
     })
     bot.on('playerJoined', (player) => {
         if (player.username !== bot.username) {
-            bot.whisper(player.username, "Toastmc.dev on TOP")
-            console.log(`[Bot] I sent ${player.username} a message: Toastmc.dev on TOP`)
+            const str = strings[Math.floor(Math.random() * strings.length)];
+            bot.whisper(player.username, str)
+            console.log(`[Bot] I sent ${player.username} a message: ${str}`)
         }
     })
     bot.on('kicked', (reason, loggedIn) => console.log("[Bot] " + reason, loggedIn))
